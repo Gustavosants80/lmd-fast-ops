@@ -1,5 +1,5 @@
 import { currentUser } from "@clerk/nextjs/server";
-import LogoutButton from "./components/LogoutButton";
+import { SignOutButton } from "@clerk/nextjs";
 import FastRequestForm from "./components/FastRequestForm";
 
 const ALLOWED_DOMAIN = "livemode.com";
@@ -8,7 +8,9 @@ export default async function Home() {
   const user = await currentUser();
 
   const emails =
-    user?.emailAddresses.map((e) => e.emailAddress.toLowerCase()) ?? [];
+    user?.emailAddresses.map((email) =>
+      email.emailAddress.toLowerCase()
+    ) ?? [];
 
   const allowedEmail = emails.find((email) =>
     email.endsWith(`@${ALLOWED_DOMAIN}`)
@@ -26,7 +28,11 @@ export default async function Home() {
             Use uma conta Google corporativa @{ALLOWED_DOMAIN}.
           </p>
 
-          <LogoutButton />
+          <SignOutButton redirectUrl="/sign-in">
+            <button type="button" className="btn primary">
+              Sair e trocar de conta
+            </button>
+          </SignOutButton>
         </section>
       </main>
     );
@@ -38,13 +44,20 @@ export default async function Home() {
         <div className="container topbar-inner">
           <div>
             <div className="eyebrow">LMD</div>
+
             <h1>LMD FAST Ops</h1>
+
             <p>Solicitacao de criacao de canal FAST</p>
           </div>
 
           <div className="user-actions">
             <span>{allowedEmail}</span>
-            <LogoutButton className="btn ghost">Sair</LogoutButton>
+
+            <SignOutButton redirectUrl="/sign-in">
+              <button type="button" className="btn ghost">
+                Sair
+              </button>
+            </SignOutButton>
           </div>
         </div>
       </header>

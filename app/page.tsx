@@ -1,5 +1,5 @@
 import { currentUser } from "@clerk/nextjs/server";
-import { SignOutButton } from "@clerk/nextjs";
+import LogoutButton from "./components/LogoutButton";
 import FastRequestForm from "./components/FastRequestForm";
 
 const ALLOWED_DOMAIN = "livemode.com";
